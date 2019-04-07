@@ -13,6 +13,7 @@
 				<h3 class="panel-title">添加品牌</h3>
 			</div>
 			<div class="panel-body form-inline">
+			<form action="#" class="form-inline">
 				<label for="">
 					Id:
 					<input type="text" class="form-control" v-model="id">
@@ -21,7 +22,8 @@
 					Name:
 					<input type="text" class="form-control" v-model="name">
 				</label>
-				<input type="button" value="添加" class="btn btn-primary" @click="add">
+				<input type="submit" value="添加" class="btn btn-primary" @click="add">
+				</form>
 				<label for="">
 					搜索名称关键字: 
 					<input type="text" class="form-control" v-model="keywords">
@@ -41,13 +43,23 @@
 				<tr v-for="item in search(keywords)" :key="item.id">
 					<td>{{item.id}}</td>
 					<td>{{item.name}}</td>
-					<td>{{item.ctime}}</td>
+					<td>{{item.ctime|dateFormat}}</td>
 					<td><a href="" @click.prevent="del(item.id)">删除</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<script>
+		Vue.filter('dateFormat',function(dateStr){
+			var dt=new Date(dateStr)
+			var y=dt.getFullYear()
+			var m=dt.getMonth()
+			var d=dt.getDate()
+			var h=dt.getHours()
+			var mm=dt.getMinutes()
+			var s=dt.getSeconds()
+			return `${y}-${m}-${d} ${h}:${mm}:${s}`
+		})
 		var vm=new Vue({
 			el:"#app",
 			data:{
@@ -62,7 +74,7 @@
 			},
 			methods:{
 				add(){
-					var car={id:this.id,name:this.name,ctime:''+new Date()+''}
+					var car={id:this.id,name:this.name,ctime:new Date()}
 					this.list.push(car)
 					this.id=this.name=''
 				},

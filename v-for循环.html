@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue学习</title>
+	<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div>
+			<label for="">Id:
+				<input type="text" v-model="id">
+			</label>
+			<label for="">Name:
+				<input type="text" v-model="name">
+			</label>
+			<input type="button" value="添加" @click="add">
+		</div>
+		<p v-for="(item,key) in list" :key="item.id">
+			<input type="checkbox">{{item.id}}----{{item.name}}
+		</p>
+	</div>
+	<script>
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				id:"",
+				name:"",
+				list:[
+				{id:1,name:"李斯"},
+				{id:2,name:"中通"},
+				{id:3,name:"圆通"},
+				{id:4,name:"顺丰"}
+				]
+			},
+			methods:{
+				add(){
+					this.list.unshift({id:this.id,name:this.name})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

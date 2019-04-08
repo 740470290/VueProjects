@@ -1,8 +1,8 @@
 from flask import Flask,request
 from flask import jsonify
-
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app, supports_credentials=True)//应对跨域请求
 @app.route('/')
 def helloworld():
     # if(request.args.get('callback')==None):

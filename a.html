@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Vue学习</title>
+	<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+</head>
+<body>
+	<div id="app">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">添加品牌</h3>
+			</div>
+			<div class="panel-body form-inline">
+			<form action="#" class="form-inline">
+				<label for="">
+					Name:
+					<input type="text" class="form-control" v-model="name">
+				</label>
+				<input type="submit" value="添加" class="btn btn-primary" @click="add">
+				</form>
+				<label for="">
+					搜索名称关键字:
+					<input type="text" class="form-control" v-model="keywords">
+				</label>
+			</div>
+		</div>
+		<table class="table table-hover table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Ctime</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in search(keywords)" :key="item.id">
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.ctime|dateFormat}}</td>
+					<td><a href="" @click.prevent="del(item.id)">删除</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		Vue.filter('dateFormat',function(dateStr){
+			var dt=new Date(dateStr)
+			var y=dt.getFullYear()
+			var m=dt.getMonth()
+			var d=dt.getDate()
+			var h=dt.getHours()
+			var mm=dt.getMinutes()
+			var s=dt.getSeconds()
+			return `${y}-${m}-${d} ${h}:${mm}:${s}`
+		})
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				name:'',
+				keywords:'',
+				list:[
+				{id:1,name:'宝马',ctime:"Sun Apr 07 2019 14:07:35 GMT+0800 (中国标准时间)"}
+				]
+			},
+            created(){
+                this.getAllList()
+            },
+			methods:{
+				add(){
+					var car={id:this.id,name:this.name,ctime:new Date()}
+					this.list.push(car)
+					this.id=this.name=''
+				},
+				del(id){
+					this.list.some((item,i)=>{
+						if(item.id==id){
+							this.list.splice(i,1)
+							return true;
+						}
+					})
+				},
+				search(keywords){
+					// 方法1
+					// var newList=[];
+					// this.list.forEach(item=>{
+					// 	if(item.name.indexOf(keywords)!=-1){
+					// 		newList.push(item)
+					// 	}
+					// })
+					// return newList;
+					// 方法2
+					return this.list.filter(item=>{
+						if(item.name.includes(keywords)){
+							return item;
+						}
+					})
+				},
+              getAllList(){
+				  this.$http.get('http://127.0.0.1:5000/getMsg').then(res=>{
+                    // document.getElementById("app").innerHTML = res.body
+                    console.log(123)
+                    // this.list=res.body
+                },res=>{
+                    console.log('请求失败处理');
+                });
+              }
+			}
+		})
+	</script>
+</body>
+</html>

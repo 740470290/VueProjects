@@ -50,7 +50,7 @@
 		Vue.filter('dateFormat',function(dateStr){
 			var dt=new Date(dateStr)
 			var y=dt.getFullYear()
-			var m=dt.getMonth()
+			var m=dt.getMonth()+1
 			var d=dt.getDate()
 			var h=dt.getHours()
 			var mm=dt.getMinutes()
@@ -71,9 +71,15 @@
             },
 			methods:{
 				add(){
-					var car={id:this.id,name:this.name,ctime:new Date()}
-					this.list.push(car)
-					this.id=this.name=''
+					// var car={id:this.id,name:this.name,ctime:new Date()}
+					// this.list.push(car)
+					// this.id=this.name=''
+          this.$http.post('http://127.0.0.1:5000/getMsg',{name:this.name},{emulateJSON:true}).then(res=>{
+                this.list=res.body
+            // this.getAllList()
+                },res=>{
+                    console.log('请求失败处理');
+                });
 				},
 				del(id){
 					this.list.some((item,i)=>{
@@ -101,9 +107,7 @@
 				},
               getAllList(){
 				  this.$http.get('http://127.0.0.1:5000/getMsg').then(res=>{
-                    // document.getElementById("app").innerHTML = res.body
-                    console.log(123)
-                    // this.list=res.body
+                    this.list=res.body
                 },res=>{
                     console.log('请求失败处理');
                 });

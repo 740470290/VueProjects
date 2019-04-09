@@ -40,13 +40,15 @@
 				<tr v-for="item in search(keywords)" :key="item.id">
 					<td>{{item.id}}</td>
 					<td>{{item.name}}</td>
-					<td>{{item.ctime|dateFormat}}</td>
+					<td>{{item.ctime}}</td>
+					<!--<td>{{item.ctime|dateFormat}}</td>-->
 					<td><a href="" @click.prevent="del(item.id)">删除</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<script>
+    // vue过滤器
 		Vue.filter('dateFormat',function(dateStr){
 			var dt=new Date(dateStr)
 			var y=dt.getFullYear()
@@ -66,9 +68,10 @@
 				{id:1,name:'宝马',ctime:"Sun Apr 07 2019 14:07:35 GMT+0800 (中国标准时间)"}
 				]
 			},
-            created(){
-                this.getAllList()
-            },
+      // 生命周期函数
+      created(){
+          this.getAllList()
+      },
 			methods:{
 				add(){
 					// var car={id:this.id,name:this.name,ctime:new Date()}

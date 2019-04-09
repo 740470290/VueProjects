@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue学习</title>
+  <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+  <link rel="stylesheet" href="./animate.css">
+  <style>
+    .ball{
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <input type="button" value="加入购物车" @click="flag=!flag">
+    <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+      <div class="ball" v-show="flag"></div>
+    </transition>
+  </div>
+  <script>
+    new Vue({
+      el:"#root",
+      data:{
+        flag:false
+      },
+      methods:{
+        beforeEnter: function (el) {
+          el.style.transform='translate(0,0)'
+        },
+        enter: function (el,done) {
+          el.offsetWidth
+          el.style.transform='translate(150px,450px)'
+          el.style.transition='all 1s ease'
+          done()
+        },
+        afterEnter(el) {
+          this.flag=!this.flag
+        }
+      }
+    })
+  </script>
+</body>
+</html>

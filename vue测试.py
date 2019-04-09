@@ -5,6 +5,7 @@ import sqlite3 as sql
 import time
 
 app = Flask(__name__)
+# 处理跨域请求
 cors = CORS(app, resources={r"/getMsg": {"origins": "*"}})
 # CORS(app, supports_credentials=True)
 @app.route('/')
@@ -24,25 +25,13 @@ def home():
         con.commit()
     cur.execute("select * from students")
     ulist = cur.fetchall()
+    # ulist得到的是数组,需要转json字典
     for i in ulist:
       car = {'id': i[0], 'name': i[1], 'ctime': i[2]}
       list.append(car)
+    # 防止中文json乱码
     app.config['JSON_AS_ASCII'] = False
     return jsonify(list)
-@app.route('/add', methods=['GET', 'POST'])
-def add():
-  con = sql.connect("mydb")
-  cur = con.cursor()
-  if request.method == 'POST':
-    data = request.get_data()
-    json_data = json.loads(data.decode("utf-8"))
-    # user = json_data.get('name')
-    # text = json_data.get('ctime')
-    # # date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-    # cur.execute("INSERT INTO students (name,ctime) VALUES(?, ?)", (user, text))
-    # con.commit()
-    print(json_data)
-    return
 
 
 # 启动运行

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue学习</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="root">
+    <com @func="show"></com>
+  </div>
+  <template id="tem">
+    <div>
+      <h2>子组件</h2>
+      <input type="button" value="func方法" @click="myclick">
+    </div>
+  </template>
+  <script>
+    Vue.component('com',{
+      template:'#tem',
+      data(){
+        return{
+          msg:{name:'tom',age:18}
+        }
+      },
+      methods:{
+        myclick(){
+          // emit触发事件,传参data=1234
+          this.$emit('func',this.msg)
+        }
+      }
+    })
+    var vm=new Vue({
+      el:"#root",
+      data:{
+        dataFromSon:null
+      },
+      methods:{
+        show(data){
+          this.dataFromSon=data
+        }
+      }
+    })
+  </script>
+</body>
+</html>

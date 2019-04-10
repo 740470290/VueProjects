@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue学习</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="root">
+    <com :parentmsg="msg"></com>
+  </div>
+
+  <template id="tem">
+    <div>
+      <h2 @click="change">子组件---{{parentmsg}}</h2>
+    </div>
+  </template>
+  <script>
+    Vue.component('com',{
+      template:'#tem',
+      props:['parentmsg'],
+      data(){
+        return{
+          msg:{name:'tom',age:18}
+        }
+      },
+      methods:{
+        // 可以修改但是vue不推荐
+        change(){
+          this.parentmsg='修改了'
+        }
+      }
+    })
+    var vm=new Vue({
+      el:"#root",
+      data:{
+        msg:'父组件的数据'
+      },
+      methods:{
+
+      }
+    })
+  </script>
+</body>
+</html>

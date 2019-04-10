@@ -53,7 +53,7 @@
 		Vue.filter('dateFormat',function(dateStr){
 			var dt=new Date(dateStr)
 			var y=dt.getFullYear()
-			var m=dt.getMonth()
+			var m=dt.getMonth()+1
 			var d=dt.getDate()
 			var h=dt.getHours()
 			var mm=dt.getMinutes()

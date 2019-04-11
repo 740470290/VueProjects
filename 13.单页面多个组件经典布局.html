@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue学习</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+  <style>
+    h1{
+      margin: 0;
+      padding: 0;
+    }
+    .header{
+      background-color: orange;
+      height: 80px;
+    }
+    .container-fluid{
+      display: flex;
+      height: 400px;
+      padding: 0;
+    }
+    .left{
+      background-color: lightgreen;
+      flex: 2;
+    }
+    .right{
+      background-color: lightpink;
+      flex: 8;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+    <router-view></router-view>
+    <div class="container-fluid">
+      <router-view name="left"></router-view>
+      <router-view name="right"></router-view>
+    </div>
+</div>
+<template id="tem1">
+  <h1 class="header">Header头部区域</h1>
+</template>
+<template id="tem2">
+  <h1 class="left">leftBox侧边栏区域</h1>
+</template>
+<template id="tem3">
+  <h1 class="right">rightBox主体区域</h1>
+</template>
+  <script>
+    var header={
+      template: '#tem1'
+    }
+    var leftBox={
+      template:'#tem2'
+    }
+    var rightBox={
+      template:'#tem3'
+    }
+    var router=new VueRouter({
+      routes:[
+        {path:'/',components:{
+          default:header,
+            left:leftBox,
+            right:rightBox
+          }}
+      ]
+    })
+    var vm=new Vue({
+      el:"#app",
+      router
+    })
+  </script>
+</body>
+</html>

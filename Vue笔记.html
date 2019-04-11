@@ -1,3 +1,35 @@
 //vue操作dom,先定义ref,可以直接应用组件中的数据和方法
 ref="myh3"
 this.$refs.myh3
+//父传子
+1.绑定属性
+<com :msg='parentmsg'></com>
+2.接收参数
+props:['msg']
+3.使用数据
+<template>{{msg}}</template>
+//子传父
+1.在父元素定义数据和方法
+data:{
+  dataFromSon:null
+}
+methods:{
+  show(data){
+    this.dataFromSon=data
+  }
+}
+2.在父组件绑定方法
+<div id="root">
+  <com @func="show"></com>
+</div>
+3.组件内部绑定事件
+<template id="tem">
+    <input type="button" value="func方法" @click="myclick">
+</template>
+4.在子组件定义方法触发事件
+methods:{
+    myclick(){
+      // emit触发事件,传参data=1234
+      this.$emit('func',this.msg)
+    }
+  }

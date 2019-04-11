@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue学习</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+  <style>
+    .router-link-active{
+      color: red;
+    }
+    .v-enter,
+    .v-leave-to{
+      opacity: 0;
+      transform: translateY(150px);
+    }
+    .v-enter-active,
+    .v-leave-active{
+      transition: all 0.5s ease;
+    }
+    a{
+      font-size: 50px;
+    }
+    .c1{
+      width: 16%;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <h3><router-link to="/account">Index</router-link></h3>
+  <transition mode="out-in">
+    <router-view></router-view>
+  </transition>
+  </div>
+  <template id="tem1">
+    <form action="" class="form-group">
+      <input type="text" class="form-control c1" id="email" placeholder="用户名">
+      <input type="password" class="form-control c1" id="pwd" placeholder="密码">
+      <input type="submit" class="btn btn-primary" value="登录"></input>
+    </form>
+  </template>
+<template id="tem2">
+    <form action="" class="form-group">
+      <input type="text" class="form-control c1" placeholder="用户名">
+      <input type="text" class="form-control c1" placeholder="邮箱">
+      <input type="text" class="form-control c1" placeholder="手机号码">
+      <input type="password" class="form-control c1" placeholder="密码">
+      <input type="password" class="form-control c1" placeholder="确认密码">
+      <input type="submit" class="btn btn-primary" value="注册"></input>
+    </form>
+  </template>
+  <script>
+    var account={
+      template: '<div><h1>Account组件</h1><router-link to="/account/login?id=5&name=tom">登录</router-link><router-link to="/account/register">注册</router-link><transition mode="out-in"><router-view></router-view></transition></div>',
+    }
+    var login={
+      template: '#tem1'
+    }
+    var register={
+      template:'#tem2'
+    }
+    var router=new VueRouter({
+      routes:[
+        // 重定向
+        // {path:'/',redirect:'/login'},
+        {
+          path:'/account',
+          component:account,
+          children:[
+            {path:'login',component:login},
+            {path:'register',component:register}
+          ]
+        },
+
+      ],
+      // 自定义点击router-link时触发的类,可以设置为bootstrap的类
+      // linkActiveClass:'myactive'
+    })
+    var vm=new Vue({
+      el:"#app",
+      router
+    })
+  </script>
+</body>
+</html>

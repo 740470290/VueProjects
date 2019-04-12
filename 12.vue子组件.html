@@ -77,14 +77,22 @@
             {path:'register',component:register}
           ]
         },
-
       ],
       // 自定义点击router-link时触发的类,可以设置为bootstrap的类
       // linkActiveClass:'myactive'
     })
     var vm=new Vue({
       el:"#app",
-      router
+      router,
+      watch:{
+        '$route.path':function (newVal,oldVal) {
+          if(newVal=='/account/login'){
+            console.log('欢迎进入登录页面')
+          }else if(newVal=='/account/register'){
+            console.log('欢迎进入注册页面')
+          }
+        }
+      }
     })
   </script>
 </body>

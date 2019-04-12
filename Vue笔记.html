@@ -39,13 +39,19 @@ watch:{
     alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
 }
 }
-//watch监听路由变化
+//watch主要监听路由变化
 watch:{
-    '$route.path':function (newVal,oldVal) {
-      if(newVal=='/account/login'){
-        console.log('欢迎进入登录页面')
-      }else if(newVal=='/account/register'){
-        console.log('欢迎进入注册页面')
-      }
+  '$route.path':function (newVal,oldVal) {
+    if(newVal=='/account/login'){
+      console.log('欢迎进入登录页面')
+    }else if(newVal=='/account/register'){
+      console.log('欢迎进入注册页面')
     }
   }
+}
+//计算属性,把方法当做属性用,主要监听数据的变化,每次firstName,lastName变化就会触发这个函数,不变化就不触发,性能高
+computed:{
+  'fullName':function () {
+    return this.firstName+this.lastName
+  }
+}

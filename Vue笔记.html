@@ -33,3 +33,19 @@ methods:{
       this.$emit('func',this.msg)
     }
   }
+//watch属性,data中counter的变化会触发函数
+watch:{
+  'counter': function(newVal, oldVal) {
+    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+}
+}
+//watch监听路由变化
+watch:{
+    '$route.path':function (newVal,oldVal) {
+      if(newVal=='/account/login'){
+        console.log('欢迎进入登录页面')
+      }else if(newVal=='/account/register'){
+        console.log('欢迎进入注册页面')
+      }
+    }
+  }

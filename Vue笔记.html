@@ -40,11 +40,11 @@ watch:{
 }
 }
 //watch主要监听路由变化
-watch:{
-  '$route.path':function (newVal,oldVal) {
-    if(newVal=='/account/login'){
+watch: {
+  '$route.path': function (newVal, oldVal) {
+    if (newVal === '/account/login') {
       console.log('欢迎进入登录页面')
-    }else if(newVal=='/account/register'){
+    } else if (newVal === '/account/register') {
       console.log('欢迎进入注册页面')
     }
   }

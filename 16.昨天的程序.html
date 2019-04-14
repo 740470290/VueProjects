@@ -1,0 +1,108 @@
+//数据保存在本地,不然局域网访问不到
+//comment.vue
+v-model="msg"
+@click="postComment"
+postComment () {
+	if(this.msg.trim().length === 0) {
+		return alert('评论不能为空')
+	}
+	this.$http.post('api/postcomment/' + this.id,{content: this.msg.trim()}).then(res => {
+	var cmt = {user_name: '匿名用户', add_time: Date.now(), content: this.msg.trim()}
+	this.comments.unshift(cmt)
+	this.msg = ''
+	})
+}
+//main.js
+Vue.http.options.emulateJSON = true
+//Home
+图片分享
+router-link
+to="/home/photolist"
+//新建photos组件文件夹,新建PhotoList组件
+//在router.js里导入这个组件
+//mui下面tab-top-webview
+//复制div.slider,删除类mui-fullscreen
+//页顶的滑动如果不生效,就导入mui.js,用官方的方法去初始化,代码需要写在mounted里
+//因为webpack的严格模式,初始化会失败,去github下载插件babel-plugin-transform-remove
+//移除严格模式,并在设置文件里加入一句话
+//在photolist加入css
+*{
+	touch-action: pan-y
+}
+//如果主目录直接不能切换,那么修改App.vue里的一个类名,并且复制全部css样式--p160
+//到photolist.vue
+data添加
+cates: []
+methods添加
+getAllCategory () {
+	this.$http.get('api/getimgcategory').then(res => {
+	res.body.message.unshift({title : '全部', id: 0})
+	this.cates = res.body.message
+	})
+}
+created () {
+	this.getAllCategory()
+	this.getPhotoListByCateId(0)
+}
+//渲染
+div.mui-scroll
+<a :class="['mui-control-item', item.id ==0 ? 'mui-active' : '']" v-for="item in cates" :key="item.id" @click="getPhotoListByCateId(item.id)">{{item.title}}</a>
+//图片列表,需要懒加载技术,需要mint-ui,'lazy-load'
+http://mint-ui.github.io/#!/zh-cn
+//在main.js里面导入,然后use
+//拷贝http://mint-ui.github.io/docs/#/en2/lazyload
+//ul,css
+//读取json
+import json
+with open('./a.json','r') as f:
+    json_dict = json.load(f)
+    print(json_dict)
+//
+list: []
+getPhotoListByCateId (cateId) {
+	this.$http.get('api/getimages/' + cateId).then(res => {
+	this.list = res.body.message
+	})
+}
+
+<ul class="photo-list">
+	<li v-for="item in list" :key="item.id">
+		<img v-lazy="item.img_url">
+		<div class="info">
+			<h4 class="info-title">{{item.title}}</h4>
+			<div class="info-body">{{item.zhaiyao}}</div>
+		</div>
+	</li>
+</ul>
+.photo-list{
+	list-style: none;
+	margin: 0;
+	padding: 10px;
+}
+.photo-list li{
+	background: #ccc;
+	text-align: center;
+	margin-bottom: 10px;
+	box-shadow: 0 0 9px #999;
+	position: relative
+}
+.photo-list li img{
+	width: 100%;
+	vertical-align: middle;
+}
+.info{
+	color: white;
+	text-align: left;
+	position: absolute;
+	buttom: 0;
+	background-color: rgba(0,0,0,0.4);
+	max-height: 84px;
+}
+
+
+//main.js,需要导入全部的MintUI
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
+import 'mint-ui/lib/style.css'
+
+//p164
